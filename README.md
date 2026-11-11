@@ -33,6 +33,15 @@ recent Edge). The executable is not signed: on first launch SmartScreen may ask 
 auto-updates and code signing are still missing: see [Known limitations](#known-limitations).
 Bug reports are welcome — read [CONTRIBUTING.md](CONTRIBUTING.md).
 
+## Support Deeps
+
+Deeps is free: no ads, no telemetry, no data sold. If it is useful to you, you can support
+development on Ko-fi:
+
+[![Support Deeps on Ko-fi](https://img.shields.io/badge/Ko--fi-Support%20Deeps-FF5E5B?logo=kofi&logoColor=white)](https://ko-fi.com/semfiku/goal?g=0)
+
+Donations help cover the project's running costs and the next beta steps.
+
 ## Features
 
 - Multiple tabs with real favicons, loading indicator, closing and drag reordering.

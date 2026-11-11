@@ -22,6 +22,15 @@ informazioni → Esegui comunque*. L'hash SHA-256 del file è nelle note della r
 installer, aggiornamenti automatici e firma del codice: vedi [Limiti noti](#limiti-noti).
 Le segnalazioni sono benvenute, leggi [CONTRIBUTING.md](CONTRIBUTING.md).
 
+## Sostieni Deeps
+
+Deeps è gratuito: niente pubblicità, niente telemetria, nessun dato venduto. Se ti è utile,
+puoi sostenere lo sviluppo su Ko-fi:
+
+[![Sostieni Deeps su Ko-fi](https://img.shields.io/badge/Ko--fi-Sostieni%20Deeps-FF5E5B?logo=kofi&logoColor=white)](https://ko-fi.com/semfiku/goal?g=0)
+
+Le donazioni aiutano a coprire i costi del progetto e i prossimi passi della beta.
+
 ```
 +--------------------------------------------------+
 |  webview "chrome" (88px)                         |  tab strip + toolbar + controlli finestra
