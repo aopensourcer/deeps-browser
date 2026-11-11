@@ -1,26 +1,26 @@
-# Contribuire a Deeps
+# Contributing to Deeps
 
-Grazie per l'interesse. Bug report, idee e pull request sono benvenuti.
+Thanks for your interest. Bug reports, ideas and pull requests are welcome.
 
-## Prima di iniziare
+## Before you start
 
-- Cerca tra le [issue](https://github.com/aopensourcer/deeps-browser/issues) esistenti: forse
-  il problema è già segnalato.
-- Per modifiche grandi (nuove funzioni, refactor, cambi di architettura) apri prima una issue
-  e concordiamo l'approccio. Evita PR enormi senza discussione.
-- Per i problemi di sicurezza **non** aprire una issue pubblica: leggi [SECURITY.md](SECURITY.md).
+- Search the existing [issues](https://github.com/aopensourcer/deeps-browser/issues): the
+  problem may already be reported.
+- For large changes (new features, refactors, architecture changes) open an issue first and
+  let's agree on the approach. Avoid huge PRs without prior discussion.
+- For security issues **do not** open a public issue: read [SECURITY.md](SECURITY.md).
 
 ## Setup
 
-Requisiti: Windows 10/11, Rust stable (toolchain MSVC), Node 20.9+, WebView2 Runtime.
+Requirements: Windows 10/11, Rust stable (MSVC toolchain), Node 20.9+, WebView2 Runtime.
 
 ```powershell
 npm --prefix chrome install
-npm --prefix chrome run build   # genera chrome/out
-cargo run                       # avvia l'app
+npm --prefix chrome run build   # writes chrome/out
+cargo run                       # starts the app
 ```
 
-Sviluppo della UI con hot reload, dentro l'app vera:
+UI development with hot reload, inside the real app:
 
 ```powershell
 npm --prefix chrome run dev
@@ -28,10 +28,10 @@ $env:DEEPS_DEV_URL = "http://localhost:3000"
 cargo run
 ```
 
-Senza Rust, `npm --prefix chrome run dev` apre la UI su `http://localhost:3000` con un
-bridge finto (`chrome/lib/ipc.ts`).
+Without Rust, `npm --prefix chrome run dev` opens the UI at `http://localhost:3000` with a
+fake bridge (`chrome/lib/ipc.ts`).
 
-## Prima di aprire una PR
+## Before opening a PR
 
 ```powershell
 npm --prefix chrome run typecheck
@@ -40,25 +40,25 @@ cargo test
 cargo build --release
 ```
 
-- Mantieni lo stile del codice circostante: Rust semplice e senza dipendenze inutili,
-  TypeScript senza librerie di stato esterne, CSS nel foglio esistente.
-- Non introdurre telemetria, analytics o chiamate di rete non dichiarate: la privacy è
-  parte del prodotto.
-- Se aggiungi stringhe visibili, aggiungi la chiave sia in italiano sia in inglese
+- Match the surrounding style: plain Rust without needless dependencies, TypeScript without
+  external state libraries, CSS in the existing stylesheet.
+- Do not add telemetry, analytics or undeclared network calls: privacy is part of the
+  product.
+- If you add user-visible strings, add the key in both Italian and English
   (`chrome/lib/i18n.ts`).
-- Aggiorna il README se cambia il comportamento visibile all'utente.
-- Una PR = una cosa. Descrivi il problema, la soluzione e come l'hai provata.
+- Update the README when behaviour visible to users changes.
+- One PR = one thing. Describe the problem, the solution and how you tested it.
 
-## Licenza dei contributi
+## Licensing of contributions
 
-Deeps è distribuito con doppia licenza: **AGPL-3.0** per il pubblico e una licenza
-commerciale per chi non può rispettare l'AGPL (vedi [LICENSE-COMMERCIAL.md](LICENSE-COMMERCIAL.md)).
+Deeps is dual-licensed: **AGPL-3.0** for the public and a commercial license for those who
+cannot comply with the AGPL (see [LICENSE-COMMERCIAL.md](LICENSE-COMMERCIAL.md)).
 
-Inviando una pull request dichiari che:
+By submitting a pull request you confirm that:
 
-1. il contributo è tuo o hai il diritto di inviarlo;
-2. lo rilasci sotto AGPL-3.0;
-3. concedi all'autore di Deeps il diritto di distribuirlo anche con una licenza
-   commerciale, senza compensi aggiuntivi.
+1. the contribution is yours, or you have the right to submit it;
+2. you release it under AGPL-3.0;
+3. you grant the author of Deeps the right to distribute it under a commercial license as
+   well, with no additional compensation.
 
-Se il contributo contiene codice di terzi, indica la provenienza e la licenza nella PR.
+If the contribution contains third-party code, state its origin and license in the PR.

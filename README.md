@@ -1,129 +1,132 @@
+**English** · [Italiano](README.it.md)
+
 # Deeps
 
-Un browser desktop minimale: shell nativa in **Rust**, interfaccia in **Next.js**.
+A minimal desktop browser: native shell in **Rust**, UI in **Next.js**.
 
-Niente Electron e niente framework pesanti sopra il motore: `tao` crea la finestra,
-`wry` (WebView2 su Windows) crea i webview. Il chrome del browser e una normale app
-Next.js esportata in statico e incorporata nel binario.
+No Electron and no heavy frameworks on top of the engine: `tao` creates the window, `wry`
+(WebView2 on Windows) creates the webviews. The browser chrome is an ordinary Next.js app
+exported as static files and embedded in the binary.
+
+```
++--------------------------------------------------+
+|  "chrome" webview (88px)                         |  tab strip + toolbar + window controls
++--------------------------------------------------+
+|  webview of the active tab (one per tab)         |  web page
++--------------------------------------------------+
+```
+
+The window is **frameless**: minimise / maximise / close are part of the UI, and edge
+resizing is handled from JavaScript.
 
 ## Download
 
-Le build per Windows sono nella pagina
-[Releases](https://github.com/aopensourcer/deeps-browser/releases): scarica
-`Deeps-<versione>-win64.zip`, scompattala e avvia `Deeps.exe`.
+Windows builds are on the
+[Releases](https://github.com/aopensourcer/deeps-browser/releases) page: download
+`Deeps-<version>-win64.zip`, unpack it and run `Deeps.exe`.
 
-Serve Windows 10/11 con il **WebView2 Runtime** (preinstallato su Windows 11 e con Edge
-recente). L'eseguibile non è firmato: al primo avvio SmartScreen può chiedere *Ulteriori
-informazioni → Esegui comunque*. L'hash SHA-256 del file è nelle note della release.
+Requires Windows 10/11 with the **WebView2 Runtime** (preinstalled on Windows 11 and with a
+recent Edge). The executable is not signed: on first launch SmartScreen may ask you to pick
+*More info → Run anyway*. The SHA-256 of the file is in the release notes.
 
-**Stato: beta (`0.1.0-beta.1`).** Le funzioni elencate qui sotto funzionano, ma mancano
-installer, aggiornamenti automatici e firma del codice: vedi [Limiti noti](#limiti-noti).
-Le segnalazioni sono benvenute, leggi [CONTRIBUTING.md](CONTRIBUTING.md).
+**Status: beta (`0.1.0-beta.1`).** Everything listed below works, but installers,
+auto-updates and code signing are still missing: see [Known limitations](#known-limitations).
+Bug reports are welcome — read [CONTRIBUTING.md](CONTRIBUTING.md).
 
-```
-+--------------------------------------------------+
-|  webview "chrome" (88px)                         |  tab strip + toolbar + controlli finestra
-+--------------------------------------------------+
-|  webview della tab attiva (uno per tab)          |  pagina web
-+--------------------------------------------------+
-```
+## Features
 
-La finestra e **frameless**: i pulsanti riduci / massimizza / chiudi fanno parte della
-UI, e il ridimensionamento dai bordi e gestito via JavaScript.
+- Multiple tabs with real favicons, loading indicator, closing and drag reordering.
+- **Vertical tabs** with an icon button: when enabled, the bar shrinks to favicons only as
+  soon as the pointer leaves it and expands again after a 150 ms mouse dwell; opening and
+  closing are animated at 180 ms.
+- Tab shape (rounded, square, pill), accent colour and wallpaper backgrounds, including a
+  **personal photo** used as background.
+- **UI language** in English and Italian, with English as default.
+- Smart address bar: URL, host, `localhost`, path, search.
+- Search with **8 engines** and `!prefix` syntax (e.g. `!g rust webview`).
+- **25 site bangs** (`!gh`, `!yt`, `!am`, …) which take precedence over single-letter bangs.
+- **Built-in translator**: live popup on the current page, with source and target language,
+  translation of visible and dynamically added text, and restore.
+- **Free VPN** through Cloudflare WARP, with real state and instructions when it is missing.
+- **History** page with search, single-item delete and clear-all.
+- **Bookmarks** with a star in the toolbar and a dedicated page.
+- **Downloads** with a quick panel from the toolbar: mini list with progress (white ring on
+  the icon), delete and a shortcut to `deeps://downloads`.
+- **Folder chosen on every download** in a Deeps window (the native WebView2 save dialog
+  never appears), with an "Always save here" option and a configurable default folder. File
+  names stay unique and notifications report start and completion.
+- Local **password manager** with an encrypted vault.
+- Login saving **on confirmation**: no credential is stored without a click.
+- **Passkey** status based on the Windows/WebView2 authenticator.
+- **Settings** (language, engine, shortcuts, adblock, theme, photo background, download
+  folder, translator) with immediate effect.
+- **Bookmark import** from Chrome, Edge, Brave, Vivaldi, Chromium, Opera and Opera GX.
+- **Default browser**: registers Deeps in Windows and opens the default apps page.
+- **Adblock** built in at DNS level, enabled from settings.
+- **Extensions** menu with adblock status.
+- Own context menu, with actions on links, images, selection and page.
+- Image and file drag-and-drop onto the page with preview.
+- Initial onboarding on first launch, with language choice, skipped when a profile already
+  exists.
+- Shortcuts that can be toggled, with a dot indicator.
+- Automatic light/dark theme, restrained animations, vortex logo.
+- Session, window size and position persisted.
 
-## Funzioni
+## How it's built
 
-- Tab multiple con favicon reali, indicatore di caricamento, chiusura, riordino via drag.
-- **Tab verticali** con pulsante a icona: quando attivo la barra si restringe a sole
-  favicon appena il puntatore esce, e torna larga dopo un passaggio del mouse di 150 ms;
-  apertura e chiusura sono animate a 180 ms.
-- Forma delle tab (arrotondata, quadrata, pill), colore d'accento e sfondi/wallpaper,
-  inclusa una **foto personale** usata come sfondo.
-- **Lingua dell'interfaccia** italiana e inglese, con inglese come predefinito.
-- Barra indirizzi intelligente: URL, host, `localhost`, path, ricerca.
-- Ricerca con **8 motori** e sintassi `!iniziale` (es. `!g rust webview`).
-- **25 bang di sito** (`!gh`, `!yt`, `!am`, …) che hanno precedenza sui bang a lettera.
-- **Traduttore integrato**: popup dal vivo sulla pagina corrente, con lingua di partenza
-  e di arrivo, traduzione dei testi visibili e dei contenuti aggiunti dopo, e ripristino.
-- **VPN gratuita** tramite Cloudflare WARP, con stato reale e istruzioni se manca.
-- Pagina **Cronologia** con ricerca, eliminazione singola e svuotamento.
-- **Preferiti** con stella nella toolbar e pagina dedicata.
-- **Download** con pannello rapido dalla toolbar: mini-elenco con avanzamento (anello
-  bianco sull'icona), eliminazione e scorciatoia a `deeps://downloads`.
-- **Cartella scelta a ogni download** in una finestra Deeps (il dialogo di salvataggio
-  nativo di WebView2 non compare), con opzione "Salva sempre qui" e cartella predefinita
-  configurabile. I nomi restano univoci e le notifiche segnalano inizio e fine.
-- **Password manager** locale con cassaforte cifrata.
-- Salvataggio login **su conferma**: nessuna credenziale viene salvata senza un clic.
-- Stato **passkey** basato sull'autenticatore di Windows/WebView2.
-- **Impostazioni** (lingua, motore, scorciatoie, adblock, tema, sfondo con foto, cartella
-  download, traduttore) con effetto immediato.
-- **Importa preferiti** da Chrome, Edge, Brave, Vivaldi, Chromium, Opera e Opera GX.
-- **Browser predefinito**: registra Deeps in Windows e apre la pagina delle app predefinite.
-- **Adblock** integrato a livello DNS, attivabile dalle impostazioni.
-- Menu **estensioni** con stato adblock.
-- Menu contestuale proprio, con azioni su link, immagini, selezione e pagina.
-- Trascinamento di immagini e file nella pagina con anteprima.
-- Onboarding iniziale al primo avvio, con scelta della lingua, saltato se esiste già un profilo.
-- Scorciatoie attivabili/disattivabili, con indicatore a pallino.
-- Tema chiaro/scuro automatico, animazioni contenute, logo vortex.
-- Sessione, dimensioni e posizione della finestra persistite.
-
-## Com'e fatto
-
-| File | Ruolo |
+| File | Role |
 | --- | --- |
-| `src/main.rs` | event loop, bootstrap, flag WebView2 |
-| `src/app.rs` | stato: tab, attivazione, navigazione, layout, overlay, IPC, favicon, controlli finestra |
-| `src/assets.rs` | serve l'export di Next nel webview chrome tramite protocollo custom `app://` |
-| `src/internal.rs` | server HTTP di loopback: pagine interne, API JSON, redirect di ricerca |
-| `src/data.rs` | impostazioni, cronologia, preferiti, download, cassaforte cifrata |
-| `src/engines.rs` | tabella motori di ricerca e sintassi `!iniziale` |
-| `src/importer.rs` | lettura dei preferiti dai profili Chromium installati |
-| `src/defaults.rs` | registrazione in Windows come browser predefinito |
-| `src/downloads.rs` | destinazioni dei download, nomi univoci, scelta cartella, apertura file e cartella |
-| `src/urlbar.rs` | normalizza l'input: URL, host, localhost, path, ricerca, `deeps://` |
-| `src/ipc.rs` | bridge delle pagine: token per tab, scorciatoie, resize, menu contestuale, traduttore, drag |
-| `src/adblock.rs` | blocklist host e argomenti WebView2 |
-| `src/logo.rs` | logo vortex SVG e icona nativa procedurale |
-| `src/store.rs` | sessione, dimensioni e posizione in `session.json` |
-| `src/startpage.rs` | helper della new tab page |
-| `internal/` | HTML/CSS/JS delle pagine interne (inclusi traduttore e VPN) |
-| `chrome/` | UI Next.js 16 (App Router, static export) |
+| `src/main.rs` | event loop, bootstrap, WebView2 flags |
+| `src/app.rs` | state: tabs, activation, navigation, layout, overlays, IPC, favicons, window controls |
+| `src/assets.rs` | serves the Next export to the chrome webview through the custom `app://` protocol |
+| `src/internal.rs` | loopback HTTP server: internal pages, JSON APIs, search redirects |
+| `src/data.rs` | settings, history, bookmarks, downloads, encrypted vault |
+| `src/engines.rs` | search engine table and `!prefix` syntax |
+| `src/importer.rs` | reads bookmarks from installed Chromium profiles |
+| `src/defaults.rs` | registers Deeps as the default browser in Windows |
+| `src/downloads.rs` | download destinations, unique names, folder picker, opening files and folders |
+| `src/urlbar.rs` | normalizes input: URL, host, localhost, path, search, `deeps://` |
+| `src/ipc.rs` | page bridge: per-tab token, shortcuts, resize, context menu, translator, drag |
+| `src/adblock.rs` | host blocklist and WebView2 arguments |
+| `src/logo.rs` | vortex SVG logo and procedural native icon |
+| `src/store.rs` | session, size and position in `session.json` |
+| `src/startpage.rs` | new tab page helpers |
+| `internal/` | HTML/CSS/JS of the internal pages (translator and VPN included) |
+| `chrome/` | Next.js 16 UI (App Router, static export) |
 
-Scelte che vale la pena conoscere:
+Choices worth knowing:
 
-- **Due webview nella stessa finestra nativa.** Il chrome non e un overlay della pagina:
-  e un webview separato, quindi il sito non puo toccarlo ne leggerlo.
-- **Le pagine non ricevono API privilegiate.** L'unico canale e `ipc` con un token casuale
-  per tab, iniettato prima degli script della pagina: puo solo inoltrare azioni in whitelist.
-- **Pagine interne su loopback.** Una vera origine (`http://127.0.0.1:<porta effimera>`)
-  evita i problemi di `about:blank` e permette API con controllo di token e Origin.
-- **Stato in push.** Rust manda l'intero stato al chrome con `evaluate_script`; i comandi
-  tornano indietro come richieste con `id` e risposta.
-- **Tab lazy.** Il webview di una tab viene creato solo alla prima attivazione.
-- **`CHROME_HEIGHT` (88) e duplicato in `src/app.rs` e nel CSS.** Se cambi l'altezza della
-  toolbar, aggiorna entrambi.
+- **Two webviews in the same native window.** The chrome is not an overlay on the page: it
+  is a separate webview, so a site cannot touch or read it.
+- **Pages get no privileged APIs.** The only channel is `ipc` with a random per-tab token,
+  injected before the page scripts: it can only forward whitelisted actions.
+- **Internal pages on loopback.** A real origin (`http://127.0.0.1:<ephemeral port>`) avoids
+  `about:blank` problems and enables APIs with token and Origin checks.
+- **Push state.** Rust sends the whole state to the chrome with `evaluate_script`; commands
+  come back as requests with an `id` and a response.
+- **Lazy tabs.** A tab's webview is created only on first activation.
+- **`CHROME_HEIGHT` (88) is duplicated in `src/app.rs` and in the CSS.** If you change the
+  toolbar height, update both.
 
-## Pagine interne
+## Internal pages
 
-| Indirizzo | Pagina |
+| Address | Page |
 | --- | --- |
-| `deeps://start` | nuova tab |
-| `deeps://history` | cronologia |
-| `deeps://bookmarks` | preferiti |
-| `deeps://downloads` | download |
-| `deeps://passwords` | password |
-| `deeps://translate` | traduttore a pagina intera |
-| `deeps://vpn` | VPN gratuita (Cloudflare WARP) |
-| `deeps://settings` | impostazioni |
+| `deeps://start` | new tab |
+| `deeps://history` | history |
+| `deeps://bookmarks` | bookmarks |
+| `deeps://downloads` | downloads |
+| `deeps://passwords` | passwords |
+| `deeps://translate` | full-page translator |
+| `deeps://vpn` | free VPN (Cloudflare WARP) |
+| `deeps://settings` | settings |
 
-L'indirizzo mostrato nella barra e `deeps://...`, ma il contenuto vive sul server di
-loopback locale. Le pagine interne non sono salvabili nei preferiti.
+The address bar shows `deeps://...`, but the content lives on the local loopback server.
+Internal pages cannot be bookmarked.
 
-## Ricerca e `!iniziale`
+## Search and `!prefix`
 
-| Iniziale | Motore |
+| Prefix | Engine |
 | --- | --- |
 | `!d` | DuckDuckGo |
 | `!g` | Google |
@@ -134,16 +137,16 @@ loopback locale. Le pagine interne non sono salvabili nei preferiti.
 | `!q` | Qwant |
 | `!w` | Wikipedia |
 
-`!g termine` cerca su Google, `!w` da solo apre la home di Wikipedia. Se l'iniziale non
-esiste, il testo completo viene cercato con il motore predefinito e compare il messaggio
-"non supportiamo questo motore".
+`!g term` searches Google, `!w` alone opens the Wikipedia home page. If the prefix does not
+exist, the whole text is searched with the default engine and a "we don't support this
+engine" message appears.
 
-### Bang di sito
+### Site bangs
 
-I bang di sito sono più lunghi di una lettera e vengono controllati **prima** dei motori,
-quindi `!gh rust` non viene interpretato come `!g` seguito da `h rust`.
+Site bangs are longer than one letter and are checked **before** engines, so `!gh rust` is
+not parsed as `!g` followed by `h rust`.
 
-| Bang | Sito | Bang | Sito | Bang | Sito |
+| Bang | Site | Bang | Site | Bang | Site |
 | --- | --- | --- | --- | --- | --- |
 | `!gh` | GitHub | `!yt` | YouTube | `!rd` | Reddit |
 | `!tw` | X | `!ig` | Instagram | `!so` | Stack Overflow |
@@ -155,166 +158,160 @@ quindi `!gh rust` non viene interpretato come `!g` seguito da `h rust`.
 | `!pin` | Pinterest | `!maps` | Google Maps | `!drive` | Google Drive |
 | `!gpt` | ChatGPT | | | | |
 
-Con il solo bang si apre la home del sito; con un testo dopo il bang si apre la ricerca
-interna del sito (dove disponibile).
+With the bang alone the site home page opens; with text after the bang the site's own search
+opens (where available).
 
-## Scorciatoie
+## Shortcuts
 
-Attivabili dalle impostazioni (e dal pie di pagina del menu). Con le scorciatoie disattivate
-restano solo `Esc` per chiudere il menu e i comandi espliciti della UI.
+Shortcuts can be enabled from settings (and from the menu footer). With shortcuts disabled,
+only `Esc` to close the menu and the explicit UI commands remain.
 
-| Tasto | Azione |
+| Key | Action |
 | --- | --- |
-| `Ctrl+T` | nuova tab |
-| `Ctrl+W` | chiudi tab |
-| `Ctrl+L` | barra indirizzi |
-| `Ctrl+R` | ricarica |
-| `Ctrl+K` | menu / estensioni |
-| `Ctrl+Tab` / `Ctrl+Shift+Tab` | tab successiva / precedente |
-| `Ctrl+Shift+I` | DevTools della pagina |
-| `Alt+Left` / `Alt+Right` | indietro / avanti |
+| `Ctrl+T` | new tab |
+| `Ctrl+W` | close tab |
+| `Ctrl+L` | address bar |
+| `Ctrl+R` | reload |
+| `Ctrl+K` | menu / extensions |
+| `Ctrl+Tab` / `Ctrl+Shift+Tab` | next / previous tab |
+| `Ctrl+Shift+I` | page DevTools |
+| `Alt+Left` / `Alt+Right` | back / forward |
 
-## Tab verticali e aspetto
+## Vertical tabs and appearance
 
-Dalle impostazioni si sceglie il layout **orizzontale** o **verticale**. In verticale la
-barra laterale occupa 220px e il pulsante a icona accanto al logo abilita la chiusura
-automatica: quando il puntatore esce dall'area delle tab, la barra si restringe a 56px e
-restano solo le favicon; rientrando con il mouse torna a 220px dopo 150 ms, così un
-passaggio veloce non la fa aprire. La transizione dura 180 ms ed è animata sia nel chrome
-(CSS) sia nel bordo nativo della pagina, che viene ridimensionato da Rust.
+Settings let you choose the **horizontal** or **vertical** layout. In vertical mode the
+sidebar is 220px wide and the icon button next to the logo enables auto-hide: when the
+pointer leaves the tab area the bar shrinks to 56px and only favicons remain; moving the
+mouse back in expands it to 220px after 150 ms, so a quick pass does not open it. The
+transition takes 180 ms and is animated both in the chrome (CSS) and in the native edge of
+the page, which is resized by Rust.
 
-Lo stesso pannello permette di cambiare forma delle tab (arrotondata, quadrata, pill),
-colore d'accento e wallpaper. La chiusura automatica è solo uno stato di sessione: non
-viene salvata nel profilo.
+The same panel changes tab shape (rounded, square, pill), accent colour and wallpaper.
+Auto-hide is only a session state: it is not saved in the profile.
 
-Tra gli sfondi c'è **Foto personale**: si sceglie un'immagine dalle impostazioni, viene
-ridimensionata nel browser (max 1920px, JPEG) e salvata come data URL nel profilo. Chrome
-e pagine interne la mostrano dietro un velo scuro, così i testi restano leggibili; il
-chrome la carica dalla rotta interna `/wallpaper` invece di trasportarla nello stato.
+Wallpapers include **Personal photo**: pick an image from settings; it is resized in the
+browser (max 1920px, JPEG) and stored as a data URL in the profile. The chrome and internal
+pages show it behind a dark veil so text stays readable; the chrome loads it from the
+internal `/wallpaper` route instead of carrying it in the state.
 
-## Download
+## Downloads
 
-L'icona download della toolbar apre sempre un **pannello rapido** sotto la barra (non la pagina
-intera), sia con le tab in alto sia con la sidebar verticale: mostra gli ultimi file, la
-percentuale delle operazioni in corso, un pulsante per eliminare una voce e in fondo
-**Mostra tutti i download**, che apre `deeps://downloads`.
+The toolbar download icon always opens a **quick panel** under the toolbar (not the full
+page), both with tabs on top and with the vertical sidebar: it shows the latest files, the
+percentage of running operations, a button to remove an entry and, at the bottom, **Show all
+downloads**, which opens `deeps://downloads`.
 
-Il salvataggio non usa il dialogo nativo di WebView2: Deeps intercetta `DownloadStarting`,
-mostra una finestra con il nome del file, la cartella proposta e i pulsanti Scegli
-cartella / Annulla / Salva. Con "Salva sempre qui" la cartella diventa la predefinita e le
-richieste successive non compaiono più (si riattivano dalle impostazioni). La cartella
-vuota significa `%USERPROFILE%\Downloads`.
+Saving does not use the native WebView2 dialog: Deeps intercepts `DownloadStarting` and
+shows a window with the file name, the proposed folder and the buttons Choose folder /
+Cancel / Save. With "Always save here" the folder becomes the default and later requests
+are not shown again (they can be re-enabled from settings). An empty folder means
+`%USERPROFILE%\Downloads`.
 
-Anche `alert`, `confirm` e `prompt` delle pagine non mostrano più la finestra grigia di
-WebView2: Deeps disattiva i dialoghi predefiniti, intercetta `ScriptDialogOpening` e li
-disegna nella card del chrome (origine, messaggio, campo di testo per i `prompt`). La
-pagina resta bloccata finché non si sceglie OK o Annulla; chiudendo la tab il dialogo
-pendente viene annullato. I `beforeunload` vengono accettati in automatico, perché Deeps
-chiude le tab senza chiedere conferma.
+Page `alert`, `confirm` and `prompt` no longer show the grey WebView2 window either: Deeps
+disables the default dialogs, intercepts `ScriptDialogOpening` and draws them in the chrome
+card (origin, message, text field for `prompt`). The page stays blocked until you choose OK
+or Cancel; closing the tab cancels the pending dialog. `beforeunload` is accepted
+automatically, because Deeps closes tabs without asking for confirmation.
 
-## Lingua
+## Language
 
-L'interfaccia è disponibile in **inglese** (predefinito) e **italiano**. La scelta si fa
-nel primo avvio oppure da `deeps://settings`; cambiarla ricarica le pagine interne per
-applicarla subito. Il chrome Next.js usa un dizionario esplicito (`chrome/lib/i18n.ts`),
-mentre le pagine interne partono dai testi italiani e vengono tradotte al volo in inglese.
-Un profilo creato prima dell'introduzione della lingua usa l'inglese.
+The UI is available in **English** (default) and **Italian**. You choose it on first launch
+or from `deeps://settings`; changing it reloads the internal pages to apply it immediately.
+The Next.js chrome uses an explicit dictionary (`chrome/lib/i18n.ts`), while internal pages
+start from Italian strings and are translated on the fly into English. A profile created
+before the language feature uses English.
 
-## Importa preferiti e browser predefinito
+## Bookmark import and default browser
 
-Da `deeps://settings`, dal menu `Ctrl+K` o dall'ultimo passaggio dell'onboarding:
+From `deeps://settings`, from the `Ctrl+K` menu or from the last onboarding step:
 
-- **Importa** legge i file `Bookmarks` dei profili Chromium installati (Chrome, Edge,
-  Brave, Vivaldi, Chromium, Opera e Opera GX). I doppioni vengono saltati e il riepilogo
-  indica quanti preferiti sono stati aggiunti. Firefox usa SQLite e non viene letto.
-- **Rendi predefinito** scrive le chiavi per-utente in `HKCU` e apre la pagina *App
-  predefinite* di Windows. Windows chiede comunque una conferma: nessun programma può
-  diventare predefinito in silenzio. Gli URL passati sulla riga di comando vengono aperti
-  in una nuova tab.
+- **Import** reads the `Bookmarks` files of installed Chromium profiles (Chrome, Edge,
+  Brave, Vivaldi, Chromium, Opera and Opera GX). Duplicates are skipped and the summary
+  reports how many bookmarks were added. Firefox uses SQLite and is not read.
+- **Make default** writes per-user keys under `HKCU` and opens the Windows *Default apps*
+  page. Windows still asks for confirmation: no program can become the default silently.
+  URLs passed on the command line are opened in a new tab.
 
-## Traduttore
+## Translator
 
-La toolbar e il menu (`Ctrl+K`) aprono **Traduci pagina**: un popup dentro la pagina con
-la lingua di partenza (default: rileva) e quella di arrivo (default: italiano). Premendo
-Traduci:
+The toolbar and the menu (`Ctrl+K`) open **Translate page**: a popup inside the page with
+the source language (default: detect) and the target language (default: Italian). Pressing
+Translate:
 
-- i testi visibili vengono raccolti e tradotti in batch, senza toccare form, codice,
-  input o aree modificabili;
-- le modifiche successive della pagina vengono osservate e tradotte anch'esse;
-- **Ripristina** rimette il testo originale.
+- visible text is collected and translated in batches, without touching forms, code, inputs
+  or editable areas;
+- later page changes are observed and translated too;
+- **Restore** puts the original text back.
 
-Le impostazioni conservano le lingue predefinite e `deeps://translate` offre la stessa
-funzione a pagina intera. Le richieste passano dal processo Rust (niente CORS/CSP nella
-pagina) e usano il servizio pubblico di Google Translate: serve la connessione a
-Internet e il testo della pagina viene inviato al servizio. I batch vengono distanziati
-per ridurre i limiti di frequenza; se il servizio risponde 429 il popup lo dice invece
-di mostrare una traduzione parziale come completa.
+Settings keep the default languages and `deeps://translate` offers the same feature
+full-page. Requests go through the Rust process (no CORS/CSP in the page) and use the public
+Google Translate service: an Internet connection is required and the page text is sent to
+the service. Batches are spaced out to reduce rate limits; if the service returns 429 the
+popup says so instead of presenting a partial translation as complete.
 
-## VPN gratuita
+## Free VPN
 
-`deeps://vpn` e il pannello VPN mostrano lo stato reale di **Cloudflare WARP** e
-permettono connessione e disconnessione. Deeps non incapsula una VPN propria: usa il
-client ufficiale `warp-cli`. Se WARP non è installato la pagina lo dichiara e indica
-dove scaricarlo, senza fingere una connessione attiva.
+`deeps://vpn` and the VPN panel show the real state of **Cloudflare WARP** and let you
+connect and disconnect. Deeps does not wrap its own VPN: it uses the official `warp-cli`
+client. If WARP is not installed the page says so and points to the download, without
+pretending a connection is active.
 
-## Password, login e passkey
+## Passwords, logins and passkeys
 
-Il salvataggio dei login è **opt-in**: quando un form viene inviato, la pagina mostra un
-prompt e le credenziali vengono inoltrate solo dopo un clic su Salva. Se la cassaforte non
-esiste o è bloccata, l'interfaccia spiega cosa fare invece di salvare in chiaro.
+Login saving is **opt-in**: when a form is submitted the page shows a prompt and credentials
+are forwarded only after clicking Save. If the vault does not exist or is locked, the UI
+explains what to do instead of saving in plain text.
 
-Le passkey restano gestite dall'autenticatore di piattaforma (Windows Hello/WebView2):
-Deeps non le esporta e non le duplica, si limita a riportare se l'autenticatore è
-disponibile.
+Passkeys remain managed by the platform authenticator (Windows Hello/WebView2): Deeps does
+not export or duplicate them, it only reports whether the authenticator is available.
 
-## Dati e privacy
+## Data and privacy
 
-Tutto resta sul computer, in `%APPDATA%\Deeps\`:
+Everything stays on the computer, in `%APPDATA%\Deeps\`:
 
-| File | Contenuto |
+| File | Contents |
 | --- | --- |
-| `space.json` | impostazioni (incluse cartella download e foto di sfondo), cronologia (max 4000 voci), preferiti, download |
-| `vault.bin` | credenziali cifrate |
-| `session.json` | tab aperte, dimensioni e posizione finestra |
+| `space.json` | settings (including download folder and background photo), history (max 4000 entries), bookmarks, downloads |
+| `vault.bin` | encrypted credentials |
+| `session.json` | open tabs, window size and position |
 
-La cassaforte usa **Argon2id** (m=19456, t=2, p=1) per derivare la chiave e
-**XChaCha20-Poly1305** per cifrare. La password non viene mai salvata. Le credenziali
-sono disponibili solo a cassaforte sbloccata e l'interfaccia permette solo la copia,
-non la visualizzazione in chiaro. Le credenziali raccolte dai form vengono inviate a
-Deeps solo dopo la conferma esplicita nel prompt.
+The vault uses **Argon2id** (m=19456, t=2, p=1) to derive the key and
+**XChaCha20-Poly1305** to encrypt. The password is never stored. Credentials are available
+only while the vault is unlocked and the UI only allows copying, not revealing them in
+clear text. Credentials collected from forms are sent to Deeps only after explicit
+confirmation in the prompt.
 
-Il traduttore invia i testi visibili della pagina a Google Translate: è una chiamata di
-rete come quella del sito, ma vale la pena saperlo. La VPN non aggiunge telemetria
-propria: usa `warp-cli` e mostra solo lo stato riportato dal client.
+The translator sends the page's visible text to Google Translate: it is a network call like
+the site's own, but worth knowing. The VPN adds no telemetry of its own: it uses `warp-cli`
+and only shows the state reported by the client.
 
-L'adblock traduce una blocklist curata in regole `--host-resolver-rules` di WebView2:
-il DNS delle richieste pubblicitarie non viene risolto. Per questo il toggle richiede
-un riavvio dell'app.
+The adblock turns a curated blocklist into WebView2 `--host-resolver-rules`: DNS for ad
+requests is not resolved. That is why the toggle requires an app restart.
 
-Eventuali dati della vecchia installazione `Deepy` vengono letti come fallback.
+Data from the old `Deepy` installation is read as a fallback.
 
-## Requisiti
+## Requirements
 
-- Windows 10/11 con **WebView2 Runtime** (preinstallato su Windows 11 e con Edge recente)
-- **Rust** stable, toolchain MSVC
-- **Node** 20.9+ per buildare la UI
+- Windows 10/11 with **WebView2 Runtime** (preinstalled on Windows 11 and with a recent Edge)
+- **Rust** stable, MSVC toolchain
+- **Node** 20.9+ to build the UI
 
-## Comandi
+## Commands
 
 ```powershell
-# UI (una volta, e dopo ogni modifica alla chrome)
+# UI (once, and after every chrome change)
 npm --prefix chrome install
-npm --prefix chrome run build      # genera chrome/out, incorporata al prossimo cargo build
+npm --prefix chrome run build      # writes chrome/out, embedded at the next cargo build
 
 # App
 cargo run                          # debug
 cargo run --release
 
-# Test
+# Tests
 cargo test
 ```
 
-Sviluppo della UI con hot reload, dentro l'app vera:
+UI development with hot reload, inside the real app:
 
 ```powershell
 npm --prefix chrome run dev
@@ -322,46 +319,45 @@ $env:DEEPS_DEV_URL = "http://localhost:3000"
 cargo run
 ```
 
-Senza Rust, `npm --prefix chrome run dev` apre la UI su `http://localhost:3000` con un
-bridge finto (`chrome/lib/ipc.ts`): tab, barra indirizzi, menu e pagine sono cliccabili
-con dati demo.
+Without Rust, `npm --prefix chrome run dev` opens the UI at `http://localhost:3000` with a
+fake bridge (`chrome/lib/ipc.ts`): tabs, address bar, menu and pages are clickable with demo
+data.
 
-## Memoria
+## Memory
 
-Il consumo e tenuto basso con tab lazy, `--process-per-site` e
-`--renderer-process-limit=4`; le tab chiuse liberano il webview. L'obiettivo e restare
-sotto ~500 MB con un uso normale di 5-10 tab.
+Memory use is kept low with lazy tabs, `--process-per-site` and
+`--renderer-process-limit=4`; closed tabs free the webview. The goal is to stay under
+~500 MB with normal use of 5-10 tabs.
 
-## Limiti noti
+## Known limitations
 
-- WebView2 non supporta le WebExtension: il menu estensioni mostra l'adblock integrato e
-  lo dichiara esplicitamente.
-- L'adblock è a livello di host, non cosmetico: non rimuove gli spazi vuoti lasciati dagli
-  annunci.
-- Il ridimensionamento dal bordo superiore è gestito dal chrome; i bordi sinistro, destro e
-  inferiore anche dalle pagine. In layout verticale il bordo sinistro non ridimensiona
-  perché appartiene alla barra laterale.
-- Il traduttore richiede Internet e dipende dal servizio pubblico di Google: con molte
-  richieste ravvicinate può rispondere 429. In quel caso il popup mostra l'errore e si può
-  riprovare.
-- La VPN richiede **Cloudflare WARP** installato (`warp-cli` nel PATH o nel percorso
-  standard). Senza client la pagina VPN resta onesta e non simula uno stato connesso.
-- Le passkey sono delegate a Windows/WebView2; Deeps non può importarle, esportarle o
-  sincronizzarle.
-- Il salvataggio login non intercetta i flussi OAuth o i form dentro iframe cross-origin.
+- WebView2 does not support WebExtensions: the extensions menu shows the built-in adblock and
+  says so explicitly.
+- The adblock works at host level, not cosmetically: it does not remove the blank spaces left
+  by ads.
+- Resizing from the top edge is handled by the chrome; the left, right and bottom edges also
+  by the pages. In vertical layout the left edge does not resize because it belongs to the
+  sidebar.
+- The translator needs Internet and depends on the public Google service: with many requests
+  in a row it may answer 429. The popup then shows the error and you can retry.
+- The VPN requires **Cloudflare WARP** installed (`warp-cli` in `PATH` or in the standard
+  location). Without the client the VPN page stays honest and does not fake a connected
+  state.
+- Passkeys are delegated to Windows/WebView2; Deeps cannot import, export or sync them.
+- Login saving does not intercept OAuth flows or forms inside cross-origin iframes.
 
-## Licenza
+## License
 
-Deeps è distribuito sotto **GNU Affero General Public License v3.0**: vedi
-[LICENSE](LICENSE). Puoi usarlo, modificarlo e ridistribuirlo alle condizioni dell'AGPL,
-che richiede di rendere disponibile il sorgente delle versioni distribuite (incluse quelle
-modificate).
+Deeps is released under the **GNU Affero General Public License v3.0**: see
+[LICENSE](LICENSE). You can use, modify and redistribute it under the terms of the AGPL,
+which requires making the source of distributed versions (including modified ones)
+available.
 
-Se vuoi usare Deeps in un prodotto closed-source o in un browser brandizzato senza gli
-obblighi AGPL, serve una **licenza commerciale**: vedi
+If you want to use Deeps in a closed-source product or in a branded browser without the AGPL
+obligations, you need a **commercial license**: see
 [LICENSE-COMMERCIAL.md](LICENSE-COMMERCIAL.md).
 
-## Contribuire
+## Contributing
 
-Bug, idee e pull request sono benvenuti: leggi [CONTRIBUTING.md](CONTRIBUTING.md).
-Per i problemi di sicurezza non aprire una issue pubblica: vedi [SECURITY.md](SECURITY.md).
+Bugs, ideas and pull requests are welcome: read [CONTRIBUTING.md](CONTRIBUTING.md).
+For security issues do not open a public issue: see [SECURITY.md](SECURITY.md).

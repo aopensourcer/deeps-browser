@@ -1,32 +1,33 @@
-# Licenza commerciale
+# Commercial license
 
-Deeps è distribuito sotto **GNU Affero General Public License v3.0** (vedi [LICENSE](LICENSE)).
-L'AGPL è pensata per software libero: chi distribuisce Deeps o un fork deve rendere
-disponibile il codice sorgente corrispondente.
+Deeps is released under the **GNU Affero General Public License v3.0** (see [LICENSE](LICENSE)).
+The AGPL is meant for free software: anyone distributing Deeps or a fork must make the
+corresponding source code available.
 
-## Quando serve una licenza commerciale
+## When you need a commercial license
 
-Serve se vuoi usare Deeps (o una sua modifica) senza gli obblighi dell'AGPL, per esempio:
+You need one if you want to use Deeps (or a modified version) without the AGPL obligations,
+for example to:
 
-- distribuire un fork closed-source, anche gratuito;
-- incorporare Deeps in un prodotto o in un servizio a pagamento;
-- offrire un browser **white-label** con il tuo marchio, per aziende, scuole, kiosk o team;
-- distribuire Deeps in un contesto in cui non puoi pubblicare il sorgente delle modifiche.
+- distribute a closed-source fork, even for free;
+- embed Deeps in a paid product or service;
+- offer a **white-label** browser under your brand, for companies, schools, kiosks or teams;
+- ship Deeps in a context where you cannot publish the source of your changes.
 
-## Cosa include
+## What it includes
 
-Le condizioni esatte si concordano caso per caso. In genere una licenza commerciale comprende:
+Exact terms are agreed case by case. A commercial license usually includes:
 
-- diritto di uso, modifica e distribuzione senza obblighi AGPL;
-- possibilità di rimuovere o sostituire branding e collegamenti del progetto;
-- supporto e aggiornamenti concordati;
-- termine, numero di installazioni e prezzo definiti nel contratto.
+- the right to use, modify and distribute without AGPL obligations;
+- permission to remove or replace project branding and links;
+- agreed support and updates;
+- term, number of installations and price defined in the contract.
 
-## Come richiederla
+## Requesting one
 
-Apri una discussione pubblica su
-[GitHub](https://github.com/aopensourcer/deeps-browser/discussions) oppure contatta
-l'autore del progetto (`@aopensourcer`). Per trattative riservate, usa un contatto privato
-indicato nel profilo GitHub.
+Open a public discussion on
+[GitHub](https://github.com/aopensourcer/deeps-browser/discussions) or contact the project
+author (`@aopensourcer`). For confidential negotiations, use a private contact listed on the
+GitHub profile.
 
-> Nota: questa pagina non è un contratto e non sostituisce un accordo firmato.
+> Note: this page is not a contract and does not replace a signed agreement.

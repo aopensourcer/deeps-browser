@@ -1,37 +1,35 @@
-# Sicurezza
+# Security
 
-Deeps è un browser: tratta sessioni, cookie, cronologia e credenziali. Le segnalazioni di
-sicurezza sono importanti.
+Deeps is a browser: it handles sessions, cookies, history and credentials. Security reports
+matter.
 
-## Segnalare una vulnerabilità
+## Reporting a vulnerability
 
-**Non aprire una issue pubblica.** Usa i
+**Do not open a public issue.** Use
 [GitHub Security Advisories](https://github.com/aopensourcer/deeps-browser/security/advisories/new):
-la segnalazione resta privata tra te e l'autore.
+the report stays private between you and the author.
 
-Se non puoi usare GitHub, contatta l'autore (`@aopensourcer`) tramite un recapito privato
-indicato nel profilo.
+If you cannot use GitHub, contact the author (`@aopensourcer`) through a private address
+listed on the GitHub profile.
 
-Includi, se possibile:
+Please include, where possible:
 
-- versione di Deeps e di Windows/WebView2;
-- passi per riprodurre il problema;
-- impatto: cosa può fare un attaccante, con quali privilegi;
-- eventuale proof of concept, senza dati reali di terzi.
+- Deeps version and Windows/WebView2 version;
+- steps to reproduce the problem;
+- impact: what an attacker can do, with which privileges;
+- a proof of concept, if any, without real third-party data.
 
-## Cosa aspettarsi
+## What to expect
 
-- Conferma di ricezione appena possibile (best effort: il progetto è portato avanti da una
-  persona).
-- Aggiornamenti sull'avanzamento e, se richiesto, credito nella nota di rilascio.
-- Divulgazione coordinata: chiediamo di non pubblicare il dettaglio prima della correzione.
+- Confirmation of receipt as soon as possible (best effort: the project is maintained by one
+  person).
+- Updates on progress and, if you want, credit in the release notes.
+- Coordinated disclosure: please do not publish details before the fix.
 
-## Ambito
+## Scope
 
-Rientrano nel perimetro: la shell Rust, il bridge IPC, il server di loopback delle pagine
-interne, la cassaforte delle password, la gestione dei download e l'incorporamento dei
-contenuti web.
+In scope: the Rust shell, the IPC bridge, the loopback server behind the internal pages, the
+password vault, download handling and the embedding of web content.
 
-Non sono vulnerabilità di Deeps i problemi del motore WebView2 o di Windows: vanno
-segnalati a Microsoft. Se però una configurazione di Deeps li rende sfruttabili, segnalalo
-comunque.
+Problems in WebView2 or Windows itself are not Deeps vulnerabilities: report them to
+Microsoft. If a Deeps configuration makes them exploitable, report it anyway.
