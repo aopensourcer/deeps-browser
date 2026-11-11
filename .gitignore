@@ -1,0 +1,22 @@
+/target
+/chrome/node_modules
+/chrome/out
+/chrome/.next
+/chrome/next-env.d.ts
+*.log
+
+# build locali e release (gli eseguibili vanno su GitHub Releases, non nel repo)
+/dist
+*.exe.old
+
+# segreti e configurazioni locali
+.env
+.env.*
+*.pem
+*.pfx
+*.key
+
+# sistema
+Thumbs.db
+.DS_Store
+desktop.ini

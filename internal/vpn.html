@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<style>html{background:#0d0d0f}@media (prefers-color-scheme:light){html{background:#f6f6f7}}</style>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="deeps-token" content="__DEEPS_TOKEN__">
+<meta name="deeps-lang" content="__DEEPS_LANG__">
+<title>VPN</title>
+<link rel="icon" href="/vortex.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/internal.css">
+<script src="/internal.js" defer></script>
+</head>
+<body data-page="vpn">
+<header>
+  <a class="brand" href="/"><img src="/vortex.svg" alt="">deeps</a>
+  <nav>
+    <a href="/history">Cronologia</a>
+    <a href="/bookmarks">Preferiti</a>
+    <a href="/downloads">Download</a>
+    <a href="/passwords">Password</a>
+    <a href="/translate">Traduttore</a>
+    <a href="/vpn" class="on">VPN</a>
+    <a href="/settings">Impostazioni</a>
+  </nav>
+</header>
+<main>
+  <div class="pagehead">
+    <div>
+      <h1>VPN gratuita</h1>
+      <p class="sub">Deeps controlla Cloudflare WARP: gratuito, senza account e senza limiti di traffico.</p>
+    </div>
+    <button id="refresh" class="btn small ghost" type="button">Aggiorna</button>
+  </div>
+
+  <section id="vpn" class="vpn-card">
+    <div class="vpn-orb" aria-hidden="true"><span></span></div>
+    <div class="vpn-info">
+      <div id="vpnState" class="vpn-state">Verifica…</div>
+      <div id="vpnDetail" class="sub">Controllo di Cloudflare WARP in corso.</div>
+    </div>
+    <div class="vpn-actions">
+      <button id="connect" class="btn primary small" type="button">Connetti</button>
+      <button id="disconnect" class="btn small" type="button">Disconnetti</button>
+    </div>
+  </section>
+
+  <section id="installCard" class="card" hidden>
+    <h2>Installa Cloudflare WARP</h2>
+    <p class="sub" style="margin-bottom:12px">
+      WARP non è stato trovato su questo computer. Installalo una volta sola, poi torna qui e premi Aggiorna.
+    </p>
+    <ol class="steps">
+      <li>Scarica il client gratuito dal sito ufficiale Cloudflare.</li>
+      <li>Completa l'installazione e accetta i termini al primo avvio.</li>
+      <li>Torna in questa pagina: il pulsante Connetti comparirà da solo.</li>
+    </ol>
+    <div class="row" style="border-bottom:0;padding-bottom:0">
+      <div class="hint">Deeps non installa nulla da solo e non conosce le tue credenziali Cloudflare.</div>
+      <a class="btn small primary" href="https://1.1.1.1/" target="_blank" rel="noreferrer">Apri 1.1.1.1</a>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Perché WARP</h2>
+    <div class="note">
+      WARP è la VPN gratuita di Cloudflare: cifra il traffico tra il computer e la rete Cloudflare e non
+      richiede un abbonamento. Deeps si limita a chiamare <b>warp-cli</b> e a mostrarti lo stato reale.
+      Se WARP non è installato, la pagina non finge che sia attivo.
+    </div>
+    <div class="row">
+      <div>
+        <div class="label">Comandi usati</div>
+        <div class="hint"><code>warp-cli status</code> · <code>warp-cli connect</code> · <code>warp-cli disconnect</code></div>
+      </div>
+      <span class="pill">solo locale</span>
+    </div>
+  </section>
+</main>
+<div id="toast" class="toast" role="status"></div>
+</body>
+</html>

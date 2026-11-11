@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<style>html{background:#0d0d0f}@media (prefers-color-scheme:light){html{background:#f6f6f7}}</style>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="deeps-token" content="__DEEPS_TOKEN__">
+<meta name="deeps-lang" content="__DEEPS_LANG__">
+<title>Traduttore</title>
+<link rel="icon" href="/vortex.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/internal.css">
+<script src="/internal.js" defer></script>
+</head>
+<body data-page="translate">
+<header>
+  <a class="brand" href="/"><img src="/vortex.svg" alt="">deeps</a>
+  <nav>
+    <a href="/history">Cronologia</a>
+    <a href="/bookmarks">Preferiti</a>
+    <a href="/downloads">Download</a>
+    <a href="/passwords">Password</a>
+    <a href="/translate" class="on">Traduttore</a>
+    <a href="/vpn">VPN</a>
+    <a href="/settings">Impostazioni</a>
+  </nav>
+</header>
+<main>
+  <div class="pagehead">
+    <div>
+      <h1>Traduttore</h1>
+      <p class="sub">Il traduttore di Deeps passa da un proxy locale: nessuna estensione e nessuna chiave API.</p>
+    </div>
+    <span class="pill">integrato</span>
+  </div>
+
+  <section class="card trans-card">
+    <div class="langrow">
+      <label class="field">Da
+        <select id="from" class="text"></select>
+      </label>
+      <button id="swap" class="swapbtn" type="button" title="Inverti le lingue" aria-label="Inverti le lingue">⇄</button>
+      <label class="field">A
+        <select id="to" class="text"></select>
+      </label>
+    </div>
+
+    <textarea id="source" class="text trans-area" placeholder="Scrivi o incolla il testo da tradurre…" spellcheck="false"></textarea>
+    <div class="trans-meta">
+      <span id="count" class="sub">0 caratteri</span>
+      <span id="detected" class="pill" hidden></span>
+    </div>
+    <div class="trans-actions">
+      <button id="clear" class="btn small ghost" type="button">Pulisci</button>
+      <button id="translate" class="btn primary" type="button">Traduci</button>
+    </div>
+
+    <div id="result" class="trans-result" hidden>
+      <div class="trans-result-head">
+        <span>Traduzione</span>
+        <button id="copy" class="btn small ghost" type="button">Copia</button>
+      </div>
+      <p id="output"></p>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Come funziona</h2>
+    <div class="note">
+      Il testo viene inviato al traduttore pubblico di Google attraverso il piccolo server locale di Deeps.
+      Non viene conservato né nella cronologia né su disco. Puoi aprire questa pagina anche dal menu o
+      selezionando del testo e scegliendo <b>Traduci con Deeps</b>.
+    </div>
+  </section>
+</main>
+<div id="toast" class="toast" role="status"></div>
+</body>
+</html>

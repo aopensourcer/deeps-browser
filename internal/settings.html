@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<style>html{background:#0d0d0f}@media (prefers-color-scheme:light){html{background:#f6f6f7}}</style>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="deeps-token" content="__DEEPS_TOKEN__">
+<meta name="deeps-lang" content="__DEEPS_LANG__">
+<title>Impostazioni</title>
+<link rel="icon" href="/vortex.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/internal.css">
+<script src="/internal.js" defer></script>
+</head>
+<body data-page="settings">
+<header>
+  <a class="brand" href="/"><img src="/vortex.svg" alt="">deeps</a>
+  <nav>
+    <a href="/history">Cronologia</a>
+    <a href="/bookmarks">Preferiti</a>
+    <a href="/downloads">Download</a>
+    <a href="/passwords">Password</a>
+    <a href="/translate">Traduttore</a>
+    <a href="/vpn">VPN</a>
+    <a href="/settings" class="on">Impostazioni</a>
+  </nav>
+</header>
+<main>
+  <div class="pagehead">
+    <div>
+      <h1>Impostazioni</h1>
+      <p class="sub">Poche cose, tutte locali. Le modifiche si applicano subito.</p>
+    </div>
+  </div>
+
+  <section class="card">
+    <h2>Lingua</h2>
+    <div class="row">
+      <div>
+        <div class="label">Lingua</div>
+        <div class="hint">Lingua dell’interfaccia. Inglese è il valore predefinito.</div>
+      </div>
+      <select id="language" class="text compact">
+        <option value="en">Inglese</option>
+        <option value="it">Italiano</option>
+      </select>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Ricerca</h2>
+    <p class="sub" style="margin-bottom:12px">Motore usato dalla barra indirizzi e dalla nuova tab.</p>
+    <label class="field">Motore predefinito
+      <select id="engine" class="text"></select>
+    </label>
+    <div id="engines" class="sub"></div>
+    <div class="note">Scorciatoia: scrivi <b>!g</b>, <b>!d</b>, <b>!w</b>… per cercare con un motore specifico. Un motore sconosciuto esegue la ricerca normale e mostra un avviso.</div>
+  </section>
+
+  <section class="card">
+    <h2>Bang dei siti</h2>
+    <p class="sub" style="margin-bottom:12px">25 scorciatoie dirette: il testo dopo il bang diventa una ricerca sul sito.</p>
+    <div id="sites" class="chips"></div>
+    <div class="note">Esempi: <b>!gh rust</b> cerca su GitHub, <b>!yt lofi</b> su YouTube, <b>!gh</b> apre la home. I bang di due o più lettere hanno la precedenza su quelli dei motori.</div>
+  </section>
+
+  <section class="card">
+    <h2>Aspetto</h2>
+    <div class="row">
+      <div>
+        <div class="label">Disposizione schede</div>
+        <div class="hint">Orizzontale classica oppure verticale con barra laterale.</div>
+      </div>
+      <select id="tabLayout" class="text compact">
+        <option value="top">Orizzontale</option>
+        <option value="vertical">Verticale</option>
+      </select>
+    </div>
+    <div class="row">
+      <div>
+        <div class="label">Forma delle schede</div>
+        <div class="hint">Arrotondata, squadrata o a pillola.</div>
+      </div>
+      <select id="tabShape" class="text compact">
+        <option value="rounded">Arrotondate</option>
+        <option value="square">Squadrate</option>
+        <option value="pill">Pillola</option>
+      </select>
+    </div>
+    <div class="row">
+      <div>
+        <div class="label">Colore principale</div>
+        <div class="hint">Usato da schede, pulsanti e dettagli.</div>
+      </div>
+      <div class="accent-row">
+        <div id="accentSwatches" class="swatches"></div>
+        <input id="accent" class="colorinput" type="color" value="#6366f1" aria-label="Colore personalizzato">
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <div class="label">Sfondo</div>
+        <div class="hint">Tinta animata per chrome e nuova tab.</div>
+      </div>
+      <select id="wallpaper" class="text compact">
+        <option value="none">Nessuno</option>
+        <option value="aurora">Aurora</option>
+        <option value="mesh">Mesh</option>
+        <option value="grid">Griglia</option>
+        <option value="dunes">Dune</option>
+        <option value="stars">Stelle</option>
+      </select>
+    </div>
+    <div class="row">
+      <div>
+        <div class="label">Foto personale</div>
+        <div class="hint">Una tua immagine come sfondo di Deeps, ridimensionata in locale.</div>
+      </div>
+      <div class="photo-actions">
+        <div id="photoPreview" class="photo-preview" hidden></div>
+        <button id="photoPick" class="btn small" type="button">Scegli foto</button>
+        <button id="photoRemove" class="btn small danger ghost" type="button" hidden>Rimuovi</button>
+        <input id="photoFile" type="file" accept="image/*" hidden>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <div class="label">Salva i login</div>
+        <div class="hint">Chiede conferma prima di copiare una password nella cassaforte cifrata.</div>
+      </div>
+      <button id="saveLogins" class="switch" role="switch" aria-label="Salva i login"></button>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Download</h2>
+    <div class="row">
+      <div>
+        <div class="label">Cartella dei download</div>
+        <div class="hint">Dove Deeps salva i file che scarichi.</div>
+      </div>
+      <div class="folder-actions">
+        <input id="downloadDir" class="text compact" type="text" spellcheck="false" placeholder="Predefinita">
+        <button id="downloadDirPick" class="btn small" type="button">Sfoglia…</button>
+      </div>
+    </div>
+    <div class="note">Lascia vuoto per usare la cartella Download di Windows: <span id="downloadDirDefault"></span></div>
+    <div class="row">
+      <div>
+        <div class="label">Chiedi dove salvare</div>
+        <div class="hint">Mostra una finestra Deeps per scegliere la cartella a ogni download.</div>
+      </div>
+      <button id="askDownloadDir" class="switch" role="switch" aria-label="Chiedi dove salvare"></button>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Traduttore</h2>
+    <p class="sub" style="margin-bottom:12px">Lingue predefinite del popup “Traduci pagina”. Puoi cambiarle al volo dal popup.</p>
+    <div class="row">
+      <div>
+        <div class="label">Traduci da</div>
+        <div class="hint">Con “Rileva lingua” Deeps riconosce il testo della pagina.</div>
+      </div>
+      <select id="translateFrom" class="text compact"></select>
+    </div>
+    <div class="row">
+      <div>
+        <div class="label">Traduci a</div>
+        <div class="hint">Lingua usata dal pulsante traduttore nella barra.</div>
+      </div>
+      <select id="translateTo" class="text compact"></select>
+    </div>
+    <div class="note">Il pulsante <b>⇄</b> nella barra apre il popup sulla pagina corrente e traduce i testi man mano che compaiono. Il tasto <b>Ripristina</b> rimette la pagina originale.</div>
+  </section>
+
+  <section class="card">
+    <div class="row">
+      <div>
+        <div class="label">Scorciatoie da tastiera <span id="shortcutsDot" class="dot"></span></div>
+        <div class="hint">Ctrl+T, Ctrl+W, Ctrl+L, Ctrl+R, Ctrl+Tab, Alt+← →. Il puntino indica che sono attive.</div>
+      </div>
+      <button id="shortcuts" class="switch" role="switch" aria-label="Scorciatoie"></button>
+    </div>
+    <div class="row">
+      <div>
+        <div class="label">Adblock integrato</div>
+        <div class="hint">Blocca tracker e annunci a livello di risoluzione DNS. <b>Richiede il riavvio di Deeps.</b></div>
+      </div>
+      <button id="adblock" class="switch" role="switch" aria-label="Adblock"></button>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Dati</h2>
+    <div class="row">
+      <div>
+        <div class="label">Cronologia</div>
+        <div class="hint">Fino a 4000 visite, conservate in locale.</div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <a class="btn small" href="/history">Apri</a>
+        <button id="clearHistory" class="btn small danger ghost">Svuota</button>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <div class="label">Preferiti</div>
+        <div class="hint">Usati anche come link rapidi nella nuova tab.</div>
+      </div>
+      <a class="btn small" href="/bookmarks">Apri</a>
+    </div>
+    <div class="row">
+      <div>
+        <div class="label">Cassaforte password</div>
+        <div class="hint">Cifrata, sbloccabile con la password principale.</div>
+      </div>
+      <a class="btn small" href="/passwords">Apri</a>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Importa dai browser</h2>
+    <p class="sub" style="margin-bottom:12px">Preferiti da Chrome, Edge, Brave, Vivaldi e Opera.</p>
+    <div class="row">
+      <div>
+        <div class="label">Preferiti</div>
+        <div class="hint">Aggiunge i preferiti trovati senza duplicare quelli già presenti.</div>
+      </div>
+      <button id="importBookmarks" class="btn small">Importa</button>
+    </div>
+    <div class="row">
+      <div>
+        <div class="label">Browser predefinito</div>
+        <div class="hint">Apre le app predefinite di Windows per confermare.</div>
+      </div>
+      <button id="makeDefault" class="btn small">Rendi predefinito</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Informazioni</h2>
+    <div class="row">
+      <div>
+        <div class="label">Deeps</div>
+        <div class="hint">Shell Rust (tao + wry/WebView2) e interfaccia Next.js. <span id="version" class="pill">0.1.0</span></div>
+      </div>
+      <span class="pill">Windows · WebView2</span>
+    </div>
+    <div class="row">
+      <div>
+        <div class="label">Estensioni</div>
+        <div class="hint">WebView2 non supporta le estensioni Chrome. Adblock è integrato nel browser.</div>
+      </div>
+      <span class="pill">1 integrata</span>
+    </div>
+  </section>
+</main>
+<div id="toast" class="toast" role="status"></div>
+</body>
+</html>

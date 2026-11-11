@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<style>html{background:#0d0d0f}@media (prefers-color-scheme:light){html{background:#f6f6f7}}</style>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="deeps-token" content="__DEEPS_TOKEN__">
+<meta name="deeps-lang" content="__DEEPS_LANG__">
+<title>Cronologia</title>
+<link rel="icon" href="/vortex.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/internal.css">
+<script src="/internal.js" defer></script>
+</head>
+<body data-page="history">
+<header>
+  <a class="brand" href="/"><img src="/vortex.svg" alt="">deeps</a>
+  <nav>
+    <a href="/history" class="on">Cronologia</a>
+    <a href="/bookmarks">Preferiti</a>
+    <a href="/downloads">Download</a>
+    <a href="/passwords">Password</a>
+    <a href="/translate">Traduttore</a>
+    <a href="/vpn">VPN</a>
+    <a href="/settings">Impostazioni</a>
+  </nav>
+</header>
+<main>
+  <div class="pagehead">
+    <div>
+      <h1>Cronologia</h1>
+      <p class="sub">Le pagine visitate, salvate solo su questo computer.</p>
+    </div>
+    <button id="clear" class="btn ghost danger small">Svuota</button>
+  </div>
+  <input id="search" class="searchfield" placeholder="Cerca per titolo o indirizzo" autocomplete="off" spellcheck="false">
+  <div id="list" class="list"></div>
+</main>
+<div id="toast" class="toast" role="status"></div>
+</body>
+</html>
